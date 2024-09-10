@@ -1,0 +1,97 @@
+group 'ssc'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'spring-boot'
+apply plugin: 'application'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+    /*jcenter()
+    maven {
+        url "http://central.maven.org/maven2/io/vertx/vertx-core/3.2.1/vertx-core-3.2.1.jar"
+    }
+    maven {
+        url "http://central.maven.org/maven2/io/vertx/vertx-lang-groovy/3.2.1/vertx-lang-groovy-3.2.1.jar"
+    }*/
+}
+
+springBoot {
+  mainClass = "ssc.Application"
+}
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "http://repo.spring.io/snapshot" }
+        maven { url "http://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE")
+        classpath('com.netflix.nebula:gradle-ospackage-plugin:2.2.6')
+        classpath 'org.springframework:springloaded:1.2.0.RELEASE'
+
+    }
+}
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
+}
+
+jar {
+    baseName = 'api'
+}
+
+
+dependencies {
+   compile 'org.codehaus.groovy:groovy-all:2.4.1'
+
+   compile('mysql:mysql-connector-java')
+   //compile('com.github.groovy-wslite:groovy-wslite:1.1.0')
+   compile("org.springframework.boot:spring-boot-starter-web")
+   compile("org.springframework.boot:spring-boot-starter-data-jpa")
+   //compile("com.h2database:h2")
+   compile("org.springframework.boot:spring-boot-starter-data-rest")
+   compile("org.springframework:spring-context-support:4.1.4.RELEASE")
+   compile("org.springframework.boot:spring-boot-starter-actuator")
+
+   // Google client
+   compile 'com.google.apis:google-api-services-youtube:v3-rev163-1.21.0'
+
+   // Amazon
+   // compile 'com.amazonaws:aws-java-sdk:1.10.69'
+
+    compile 'org.apache.lucene:lucene-core:5.5.0'
+    compile 'org.apache.lucene:lucene-analyzers-common:5.5.0'
+    compile 'org.apache.lucene:lucene-queryparser:5.5.0'
+
+   // Get Elasticsearch Client
+    compile 'org.elasticsearch:elasticsearch-groovy:2.1.2'
+    compile 'io.searchbox:jest:2.0.0'
+
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'commons-codec:commons-codec:1.10'
+   //compile 'jsoup:jsoup:1.8.3'
+
+    compile "org.springframework.boot:spring-boot-configuration-processor"
+
+    compile "io.vertx:vertx-core:3.2.1"
+    compile "io.vertx:vertx-lang-groovy:3.2.1"
+
+   testCompile group: 'junit', name: 'junit', version: '4.11'
+   testCompile("org.springframework.boot:spring-boot-starter-test")
+   testCompile("org.springframework:spring-test:4.1.4.RELEASE")
+
+   testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+   testCompile "org.spockframework:spock-spring:1.0-groovy-2.4"
+}
+compileJava.dependsOn(processResources)

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+
+    <logger name="org.quartz" level="ERROR"/>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.hibernate" level="ERROR"/>
+
+    <logger name="ssc" level="INFO"/>
+
+    <property scope="context" name="logfolder" value="/app/logs/apis" />
+
+
+    <appender name="APIS_INFO_LOGGER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${logfolder}/apis_info.log</File>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logfolder}/opernicus_info.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-4relative [%thread] %-5level %logger{5} - %m%n</Pattern>
+        </layout>
+    </appender>
+
+
+    <appender name="APIS_ERROR_LOGGER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${logfolder}/apis_error.log</File>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logfolder}/apis_error.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-4relative [%thread] %-5level %logger{5} - %m%n</Pattern>
+        </layout>
+    </appender>
+
+
+    <root level="INFO">
+        <!--<appender-ref ref="STDOUT" />-->
+        <appender-ref ref="APIS_INFO_LOGGER"/>
+        <appender-ref ref="APIS_ERROR_LOGGER"/>
+    </root>
+
+    <!--used to log metrics data--><!-- -->
+    <appender name="METRICS_INFO_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${logfolder}/metrics.log</File>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logfolder}/metrics.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%m%n</Pattern>
+        </layout>
+    </appender>
+
+
+    <logger name="METRICS_INFO_LOGGER" level="INFO">
+        <appender-ref ref="METRICS_INFO_APPENDER"/>
+    </logger>
+
+    <!--used to log elasticsearch metrics data--><!-- -->
+    <!--<appender name="ELASTICSERACH_METRICS_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${logfolder}/elasticserach_metrics.log</File>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logfolder}/elasticserach_metrics.%d{yyyy-MM-dd}.log</FileNamePattern>
+            &lt;!&ndash; keep 30 days' worth of history &ndash;&gt;
+            <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%m%n</Pattern>
+        </layout>
+    </appender>
+
+
+    <logger name="ELASTICSERACH_METRICS_LOGGER" level="INFO">
+        <appender-ref ref="ELASTICSERACH_METRICS_APPENDER"/>
+    </logger>-->
+</included>
